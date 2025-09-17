@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -27,12 +28,13 @@ const SignInScreen = () => {
       alert("Please enter a valid phone number.");
       return;
     }
-    
+
     setIsLoading(true);
     try {
       // Simulate an API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      alert(`OTP sent to ${countryCode}${phoneNumber}`);
+      // alert(`OTP sent to ${countryCode}${phoneNumber}`);
+      router.replace(`/auth/OTPScreen?phone=${countryCode}${phoneNumber}`)
     } catch (error) {
       alert("Failed to send OTP. Please try again.");
     } finally {
@@ -64,15 +66,19 @@ const SignInScreen = () => {
 
             <View style={styles.phoneInputContainer}>
               <View style={styles.phoneInputWrapper}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={styles.countryCodeButton}
                   onPress={() => setShowPicker(true)}
                 >
                   {/* <Text style={styles.countryFlag}>{countryFlag}</Text> */}
                   <Text style={styles.countryCodeText}>{countryCode}</Text>
-                  <Ionicons name="chevron-down" size={16} color={Colors.text.inverse} />
+                  <Ionicons
+                    name="chevron-down"
+                    size={16}
+                    color={Colors.text.inverse}
+                  />
                 </TouchableOpacity>
-                
+
                 <TextInput
                   style={styles.phoneInput}
                   placeholder="Phone Number"
@@ -91,20 +97,21 @@ const SignInScreen = () => {
                 setCountryCode(item.dial_code);
                 // setCountryFlag(item.flag || "🇺🇸");
                 setShowPicker(false);
-              } }
+              }}
               onBackdropPress={() => setShowPicker(false)}
               style={{
                 modal: {
                   height: 500,
-                  padding: 10
+                  padding: 10,
                 },
                 textInput: {
                   height: 40,
                   padding: 10,
                   color: Colors.primary[900],
                 },
-               
-              }} lang={""}            />
+              }}
+              lang={""}
+            />
 
             <TouchableOpacity
               style={[
