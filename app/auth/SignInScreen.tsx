@@ -1,10 +1,12 @@
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import * as Location from 'expo-location';
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -22,6 +24,54 @@ const SignInScreen = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [countryCode, setCountryCode] = useState("+1");
   const [countryFlag, setCountryFlag] = useState("🇺🇸");
+  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  const [locationPermission, setLocationPermission] = useState(false);
+
+  // Request location permission on component mount
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission Denied', 'Location permission is needed to enhance your experience');
+        setLocationPermission(false);
+        return;
+      }
+      setLocationPermission(true);
+    })();
+  }, []);
+
+  // Function to get user's current location
+  const getCurrentLocation = async () => {
+    try {
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+
+      // Get current date and time
+      const now = new Date();
+      const loginTime = now.toISOString();
+      const formattedTime = now.toLocaleString();
+      
+      // Log the location coordinates
+      console.log('User location:', {
+        phoneNumber: `${countryCode}${phoneNumber}`,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        loginTime: loginTime,
+        formattedTime: formattedTime,
+        timestamp: now.getTime() // Unix timestamp in milliseconds
+      });
+      
+      return {
+        location,
+        loginTime,
+        formattedTime,
+        timestamp: now.getTime()
+      };
+    } catch (error) {
+      console.error('Error getting location:', error);
+      return null;
+    }
+  };
 
   const handleLogin = async () => {
     if (!phoneNumber || phoneNumber.length < 10) {
@@ -31,10 +81,23 @@ const SignInScreen = () => {
 
     setIsLoading(true);
     try {
+
+      // Get user's location and time before proceeding
+      const locationData = await getCurrentLocation();
+
       // Simulate an API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      // alert(`OTP sent to ${countryCode}${phoneNumber}`);
-      router.replace(`/auth/OTPScreen?phone=${countryCode}${phoneNumber}`)
+       // You can also pass the location data to the next screen if needed
+       router.replace({
+        pathname: `/auth/OTPScreen`,
+        params: { 
+          phone: `${countryCode}${phoneNumber}`,
+          latitude: locationData?.location.coords.latitude || '',
+          longitude: locationData?.location.coords.longitude || '',
+          loginTime: locationData?.loginTime || '',
+          timestamp: locationData?.timestamp.toString() || ''
+        }
+      });
     } catch (error) {
       alert("Failed to send OTP. Please try again.");
     } finally {
