@@ -1,3 +1,4 @@
+import TextInput from "@/components/TextInput";
 import { Colors } from "@/constants/Colors";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import * as Contacts from "expo-contacts";
@@ -9,7 +10,6 @@ import {
   Image,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -142,21 +142,16 @@ const AddCustomer = () => {
       </View>
 
       {/* search */}
-      <View style={styles.searchContainer}>
-        <Ionicons
-          name="search"
-          size={20}
-          color={Colors.gray[400]}
-          style={styles.searchIcon}
-        />
+      
         <TextInput
+        icon="magnify"
+        iconSize={20}
           style={styles.searchInput}
           placeholder="Search contacts..."
           value={searchQuery}
           onChangeText={setSearchQuery}
           placeholderTextColor={Colors.gray[400]}
         />
-      </View>
 
       <View>
         <TouchableOpacity
@@ -224,22 +219,8 @@ const styles = StyleSheet.create({
     color: Colors.primary[400],
     fontWeight: "600",
   },
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: Colors.gray[100],
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    height: 44,
-    marginBottom: 16,
-  },
-  searchIcon: {
-    marginRight: 8,
-  },
   searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: Colors.text.primary,
+    marginBottom: 10
   },
   addNewCustomerText: {
     color: Colors.primary[400],

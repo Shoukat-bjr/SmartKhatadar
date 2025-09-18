@@ -31,6 +31,7 @@ export interface InputInterface {
   inputStyle?: StyleProp<TextStyle>;
   borderColor?: string;
   focusedBorderColor?: string;
+  placeholderTextColor?: string;
 }
 
 const TextInput = ({
@@ -114,7 +115,6 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 8,
     paddingHorizontal: 15,
-    marginTop: 10,
   },
 });
 
