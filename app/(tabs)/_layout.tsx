@@ -6,6 +6,7 @@ export default function TabLayout() {
     <Tabs>
       <Tabs.Screen name="index" options={{ headerShown: false }} />
       <Tabs.Screen name="customer/AddCustomer" options={{ headerShown: false, href: null }} />
+      <Tabs.Screen name="customer/CustomerForm" options={{ headerShown: false, href: null }} />
     </Tabs>
   );
 }

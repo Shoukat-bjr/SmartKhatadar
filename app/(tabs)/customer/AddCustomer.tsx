@@ -4,14 +4,14 @@ import * as Contacts from "expo-contacts";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    FlatList,
-    Image,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 // Define TypeScript interfaces
@@ -161,7 +161,7 @@ const AddCustomer = () => {
       <View>
         <TouchableOpacity
           style={styles.addNewCustomerButton}
-          onPress={() => console.log("Open the customer form")}
+          onPress={() => router.push('/(tabs)/customer/CustomerForm')}
         >
           <FontAwesome6
             name="user-plus"
