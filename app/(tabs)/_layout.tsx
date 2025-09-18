@@ -5,7 +5,7 @@ export default function TabLayout() {
   return (
     <Tabs>
       <Tabs.Screen name="index" options={{ headerShown: false }} />
-      <Tabs.Screen name="AddCustomer" options={{ headerShown: false, href: null }} />
+      <Tabs.Screen name="customer/AddCustomer" options={{ headerShown: false, href: null }} />
     </Tabs>
   );
 }

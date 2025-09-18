@@ -23,7 +23,7 @@ const HomeScreen = () => {
         }}
       >
         <MaterialIcons name="search" size={24} color="black" />
-        <TouchableOpacity onPress={()=> router.push("/(tabs)/AddCustomer")}>
+        <TouchableOpacity onPress={()=> router.push("/customer/AddCustomer")}>
           <Text style={{ color: Colors.primary[400], fontWeight: '700' }}>Add Customer</Text>
         </TouchableOpacity>
       </View>
@@ -37,7 +37,7 @@ const HomeScreen = () => {
           You have not added any customers yet.
         </Text>
 
-        <TouchableOpacity style={styles.addButton} onPress={()=> router.push("/(tabs)/AddCustomer")}>
+        <TouchableOpacity style={styles.addButton} onPress={()=> router.push("/customer/AddCustomer")}>
           <Text style={styles.addButtonText}>+ Add customers</Text>
         </TouchableOpacity>
       </View>
